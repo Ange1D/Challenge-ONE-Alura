@@ -61,4 +61,25 @@ function descifrar(mensaje) {
     mensajeDescifrado = mensajeDescifrado.replace(/ufat/g, "u");
 
     document.getElementById('message-output').value = mensajeDescifrado;
-  }
+}
+
+function btnCopiar(){
+
+
+var mensajeCifrado = document.getElementById("message-output").value;
+
+if (!navigator.clipboard){
+    alert("No es posible copiar el mensaje cifrado \nActualiza tu navegador");
+} else{
+    navigator.clipboard.writeText(mensajeCifrado).then(
+        function(){
+            //alert("Mensaje cifrado copiado");
+            document.getElementById('message-input').value = mensajeCifrado;
+            document.getElementById('message-output').value = "";
+        })
+      .catch(
+         function() {
+            alert("Ocurrio un error \nNo fue posible copiar el mensaje cifrado");
+      });
+}   
+}
