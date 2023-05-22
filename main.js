@@ -1,9 +1,19 @@
+const mensajeEntrada = document.getElementById('message-input');
+
+const caracteresValidos = new RegExp('[a-zñ ]','g');
+const caracteresNoValidos = new RegExp('[^a-zñ ]','g');
+
+mensajeEntrada.addEventListener('input', () => {
+    mensajeEntrada.value = mensajeEntrada.value.replace(caracteresNoValidos, '');
+});
+
 function btnCifrar(){
     var mensaje = document.getElementById('message-input').value;
-    if(mensaje == "" || mensaje.length == 0){
-        alert("Ingrese un mensaje");
+    if(validarMensaje(mensaje)){
+        cifrar(mensaje);
     }else{
-        cifrar(mensaje); 
+        alert("Ingrese un mensaje valido");
+        
     }
     
 }
@@ -44,10 +54,10 @@ function cifrar(mensaje) {
 
 function btnDescifrar(){
     var mensaje = document.getElementById('message-input').value;
-    if(mensaje == "" || mensaje.length == 0){
-        alert("Ingrese un mensaje");
-    }else{
+    if(validarMensaje(mensaje)){
         descifrar(mensaje); 
+    }else{
+        alert("Ingrese un mensaje valido");
     }
     
 }
@@ -82,4 +92,9 @@ if (!navigator.clipboard){
             alert("Ocurrio un error \nNo fue posible copiar el mensaje cifrado");
       });
 }   
+}
+
+function validarMensaje(mensaje){
+    return (mensaje != "" && mensaje.length > 0 && caracteresValidos.test(mensaje));
+    
 }
