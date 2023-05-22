@@ -1,4 +1,5 @@
 const mensajeEntrada = document.getElementById('message-input');
+const mensajeSalida = document.getElementById('message-output');
 
 const caracteresValidos = new RegExp('[a-zñ ]','g');
 const caracteresNoValidos = new RegExp('[^a-zñ ]','g');
@@ -8,19 +9,13 @@ mensajeEntrada.addEventListener('input', () => {
 });
 
 function btnCifrar(){
-    var mensaje = document.getElementById('message-input').value;
-    if(validarMensaje(mensaje)){
-        cifrar(mensaje);
-    }else{
-        alert("Ingrese un mensaje valido");
-        
-    }
-    
+    validarMensaje() ? cifrar() : alert("Ingrese un mensaje valido");
 }
 
-function cifrar(mensaje) {
+function cifrar() {
+    let mensaje = mensajeEntrada.value;
 
-    var mensajeCifrado = "";
+    let mensajeCifrado = "";
 
     for (let letra of mensaje) {
 
@@ -48,53 +43,46 @@ function cifrar(mensaje) {
       
     }
 
-    document.getElementById('message-output').value = mensajeCifrado;
+    mensajeSalida.value = mensajeCifrado;
 
-  }
-
-function btnDescifrar(){
-    var mensaje = document.getElementById('message-input').value;
-    if(validarMensaje(mensaje)){
-        descifrar(mensaje); 
-    }else{
-        alert("Ingrese un mensaje valido");
-    }
-    
 }
 
-function descifrar(mensaje) {
-    let mensajeDescifrado = mensaje.toLowerCase();
+function btnDescifrar(){
+    validarMensaje() ? descifrar() : alert("Ingrese un mensaje valido");
+}
+
+function descifrar() {
+    let mensajeDescifrado = mensajeEntrada.value;
     mensajeDescifrado = mensajeDescifrado.replace(/enter/g, "e");
     mensajeDescifrado = mensajeDescifrado.replace(/imes/g, "i");
     mensajeDescifrado = mensajeDescifrado.replace(/ai/g, "a");
     mensajeDescifrado = mensajeDescifrado.replace(/ober/g, "o");
     mensajeDescifrado = mensajeDescifrado.replace(/ufat/g, "u");
 
-    document.getElementById('message-output').value = mensajeDescifrado;
+    mensajeSalida.value = mensajeDescifrado;
 }
 
 function btnCopiar(){
 
-
-var mensajeCifrado = document.getElementById("message-output").value;
+let mensajeCifrado = mensajeSalida.value;
 
 if (!navigator.clipboard){
-    alert("No es posible copiar el mensaje cifrado \nActualiza tu navegador");
-} else{
-    navigator.clipboard.writeText(mensajeCifrado).then(
+        alert("No es posible copiar el mensaje cifrado \nActualiza tu navegador");
+    } else{
+        navigator.clipboard.writeText(mensajeCifrado).then(
         function(){
             //alert("Mensaje cifrado copiado");
-            document.getElementById('message-input').value = mensajeCifrado;
-            document.getElementById('message-output').value = "";
+            mensajeEntrada.value = mensajeCifrado;
+            mensajeSalida.value = "";
         })
-      .catch(
-         function() {
+        .catch(
+        function() {
             alert("Ocurrio un error \nNo fue posible copiar el mensaje cifrado");
-      });
-}   
+        });
+    }   
 }
 
-function validarMensaje(mensaje){
-    return (mensaje != "" && mensaje.length > 0 && caracteresValidos.test(mensaje));
-    
+function validarMensaje(){
+    let mensaje = mensajeEntrada.value;
+    return (mensaje != "" && mensaje.length > 0 && caracteresValidos.test(mensaje));  
 }
