@@ -13,9 +13,20 @@ main{
 
 footer {
     background-color: #312d2a;
-    padding: 24px 0;
+    padding: 48px 0;
     text-align: center;
     color: #7d7d7d;
+    font-size: 56px;
+}
+
+a:link{
+    text-decoration: none;
+    color: #7d7d7d;
+  }
+
+a:hover,:visited {
+    text-decoration: none;
+    color: #fff;
 }
 
 textarea {
@@ -28,6 +39,13 @@ textarea {
     border: none;
     border-radius: 15px;
     box-shadow: 8px 16px 16px #999;
+}
+
+@media (max-width: 720px) {
+    textarea {
+        width: 70%;
+        height: 200px;
+    }
 }
 
 textarea:focus{
